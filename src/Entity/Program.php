@@ -44,6 +44,16 @@ class Program
      */
     private $workouts;
 
+    /**
+     * @ORM\Column(type="string", length=100, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $publishedAt;
+
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
@@ -124,6 +134,30 @@ class Program
         if ($this->workouts->contains($workout)) {
             $this->workouts->removeElement($workout);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(?\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
