@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,27 @@ class Exercice
      * @ORM\Column(type="string", length=80)
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Difficulty", inversedBy="exercices")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $difficulty;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Workout", mappedBy="exercices")
+     */
+    private $workouts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image", inversedBy="exercices")
+     */
+    private $image;
+
+    public function __construct()
+    {
+        $this->workouts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +91,58 @@ class Exercice
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDifficulty(): ?Difficulty
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(?Difficulty $difficulty): self
+    {
+        $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Workout[]
+     */
+    public function getWorkouts(): Collection
+    {
+        return $this->workouts;
+    }
+
+    public function addWorkout(Workout $workout): self
+    {
+        if (!$this->workouts->contains($workout)) {
+            $this->workouts[] = $workout;
+            $workout->addExercice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkout(Workout $workout): self
+    {
+        if ($this->workouts->contains($workout)) {
+            $this->workouts->removeElement($workout);
+            $workout->removeExercice($this);
+        }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
