@@ -1,7 +1,6 @@
 
 html,
 body,
-header,
 #intro {
     height: 100%;
 }
@@ -38,4 +37,8 @@ body {
 
 footer {
     background-color: #526266;
+}
+
+.first-section-wm {
+    margin-top: 5rem;
 }

@@ -8,12 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class WorkoutController extends AbstractController
 {
     /**
-     * @Route("/workout", name="workout")
+     * @Route("/workout", name="app_workouts")
      */
     public function index()
     {
-        return $this->render('workout/index.html.twig', [
-            'controller_name' => 'WorkoutController',
-        ]);
+        return $this->render('workout/index.html.twig');
     }
 }

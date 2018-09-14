@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}Home{% endblock %}
 
 {% block header %}
@@ -15,7 +20,7 @@
                         <hr class="my-5 hr-wm">
 
                         <h2 class="white-text my-4">Créer votre entrainement sur mesure</h2>
-                        <button type="button" class="btn btn-wm">Trouver un workout</button>
+                        <a href="{{ path('app_workouts') }}" class="btn btn-wm">Trouver un workout</a>
                     </div>
                 </div>
             </div>
