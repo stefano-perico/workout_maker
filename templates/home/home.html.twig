@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+    <!--Mask-->
+    <section id="intro" class="view">
+        <div class="mask rgba-black-light">
+            <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-md-12">
+                        <h1 class="display-4 font-weight-bold white-text pt-5 mb-2">Workout Maker</h1>
+
+                        <hr class="my-5 hr-wm">
+
+                        <h2 class="white-text my-4">Créer votre entrainement sur mesure</h2>
+                        <button type="button" class="btn btn-wm">Trouver un workout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/Mask-->
+{% endblock %}
+
+{% block body %}
+    <section class="mt-5 container">
+        <!--Section: Best Features-->
+        <section id="best-features" class="text-center white-text">
+            <h2 class="mb-5 font-weight-bold">Best Features</h2>
+            <aside class="row d-flex justify-content-center mb-4">
+                <p class="col-mb-8">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolorum ex hic itaque nam repellat velit vero. Consectetur consequatur dolor facere fugiat harum ipsum laudantium nihil nostrum, sed, sint voluptates!
+                </p>
+            </aside>
+
+            <hr class="my-5 hr-wm">
+
+            <section class="row">
+
+                <aside class="col-md-4 mb-1">
+                    <i class="fa fa-camera-retro fa-4x orange-text-wm"></i>
+                    <h3 class="my-4 font-weight-bold">Experiance</h3>
+                    <p class="grey-text" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci beatae esse facilis id iste minus pariatur quae totam vitae! A dolorem in, incidunt molestias mollitia natus nesciunt temporibus? Aut!</p>
+                </aside>
+
+                <aside class="col-md-4 mb-1">
+                    <i class="fa fa-heart fa-4x orange-text-wm"></i>
+                    <h3 class="my-4 font-weight-bold">Happiness</h3>
+                    <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci beatae esse facilis id iste minus pariatur quae totam vitae! A dolorem in, incidunt molestias mollitia natus nesciunt temporibus? Aut!</p>
+                </aside>
+
+                <aside class="col-md-4 mb-1">
+                    <i class="fa fa-bicycle fa-4x orange-text-wm"></i>
+                    <h3 class="my-4 font-weight-bold">Adventure</h3>
+                    <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci beatae esse facilis id iste minus pariatur quae totam vitae! A dolorem in, incidunt molestias mollitia natus nesciunt temporibus? Aut!</p>
+                </aside>
+            </section>
+        </section>
+        <!--/Section: Best Features-->
+
+        <hr class="my-5 hr-wm">
+
+        <!--Section: Contact-->
+        <section id="contact">
+
+            <!-- Heading -->
+            <h2 class="mb-5 font-weight-bold text-center white-text">Contact us</h2>
+
+            <!--Grid row-->
+            <article>
+                    <!-- Form contact -->
+                    <form class="p-5">
+                        <div class="md-form form-sm"> <i class="fa fa-user prefix orange-text-wm"></i>
+                            <input type="text" id="form1" class="form-control form-control-sm">
+                            <label for="form1">Your name</label>
+                        </div>
+                        <div class="md-form form-sm"> <i class="fa fa-envelope prefix orange-text-wm"></i>
+                            <input type="text" id="form2" class="form-control form-control-sm">
+                            <label for="form2">Your email</label>
+                        </div>
+                        <div class="md-form form-sm"> <i class="fa fa-tag prefix orange-text-wm"></i>
+                            <input type="text" id="form3" class="form-control form-control-sm">
+                            <label for="form3">Subject</label>
+                        </div>
+                        <div class="md-form form-sm"> <i class="fa fa-pencil prefix orange-text-wm"></i>
+                            <textarea type="text" id="form8" class="md-textarea form-control form-control-sm" rows="4"></textarea>
+                            <label for="form8">Your message</label>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-wm">Send <i class="fa fa-paper-plane-o ml-1"></i></button>
+                        </div>
+                    </form>
+                    <!-- Form contact -->
+            </article>
+            <!--Grid row-->
+
+        </section>
+        <!--Section: Contact-->
+
+    </section>
+
+{% endblock %}

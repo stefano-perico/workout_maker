@@ -1,0 +1,41 @@
+
+html,
+body,
+header,
+#intro {
+    height: 100%;
+}
+
+
+.btn-wm {
+    border-radius: 24px;
+    background: #FF6A0D;
+}
+
+#intro {
+    background: url("../img/home.jpg")no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.orange-text-wm {
+    color: #FF6A0D;
+}
+
+body {
+    background-color: #332E30;
+}
+
+.hr-wm {
+    background: #FF6A0D;
+}
+
+.top-nav-collapse {
+    background-color: #526266;
+}
+
+footer {
+    background-color: #526266;
+}
