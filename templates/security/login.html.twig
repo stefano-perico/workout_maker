@@ -18,11 +18,14 @@
             <!-- Password -->
             <input type="password" name="password" class="form-control mb-4" placeholder="Password">
 
+            <!-- Crsf Token -->
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
             <div class="d-flex justify-content-around">
                 <div>
                     <!-- Remember me -->
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                        <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember" name="_remember_me">
                         <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
                     </div>
                 </div>
