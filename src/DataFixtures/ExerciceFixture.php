@@ -17,8 +17,8 @@ class ExerciceFixture extends BaseFixture
     private static $exerciceCategory = [
         'Trunk',
         'Arms',
-        'lower body',
-        'whole body',
+        'Lower body',
+        'Whole body',
     ];
 
     protected function loadData(ObjectManager $manager)
