@@ -2,16 +2,35 @@
 
 namespace App\Controller;
 
+use App\Entity\Workout;
+use App\Repository\WorkoutRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/workout/")
+ */
 class WorkoutController extends AbstractController
 {
     /**
-     * @Route("/workout", name="app_workouts")
+     * @Route("/index", name="app_workouts")
      */
-    public function index()
+    public function index(WorkoutRepository $repository)
     {
-        return $this->render('workout/index.html.twig');
+        $workouts = $repository->findAllPublishedWorkoutByNewest();
+
+        return $this->render('workout/index.html.twig', [
+            'workouts'  =>  $workouts
+        ]);
+    }
+
+    /**
+     * @Route("/show/{slug}", name="app_workout_show")
+     */
+    public function show(Workout $workout)
+    {
+        return $this->render('workout/show.html.twig', [
+           'workout'    =>  $workout
+        ]);
     }
 }

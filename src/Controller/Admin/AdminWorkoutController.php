@@ -9,16 +9,21 @@
 namespace App\Controller\Admin;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/admin/")
+ */
 class AdminWorkoutController extends AbstractController
 {
     /**
-     * @Route("/admin/workout/new", name="app_workout_new")
+     * @Route("/workout/new", name="app_workout_new")
      */
     public function new(){
-
+        return "test";
     }
 
 }

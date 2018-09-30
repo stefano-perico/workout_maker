@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Workout;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,27 @@ class WorkoutRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Workout::class);
+    }
+
+    /**
+     * @return Workout[] Returns an array of Workout objects
+     */
+    public function findAllPublishedWorkoutByNewest()
+    {
+        return $this->addPublishedWorkout()
+            ->orderBy('w.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    private function addPublishedWorkout(QueryBuilder $qb = null){
+        return $this->createQueryBuilder($qb)
+            ->andWhere('w.publishedAt IS NOT NULL');
+    }
+
+    private function getOrCreatQueryBuilder(QueryBuilder $qb = null){
+        return $qb ?: $this->createQueryBuilder($qb);
     }
 
 //    /**
@@ -47,4 +69,5 @@ class WorkoutRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
