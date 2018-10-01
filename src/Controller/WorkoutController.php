@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WorkoutController extends AbstractController
 {
     /**
-     * @Route("/index", name="app_workouts")
+     * @Route("index", name="app_workouts")
      */
     public function index(WorkoutRepository $repository)
     {
@@ -25,7 +25,7 @@ class WorkoutController extends AbstractController
     }
 
     /**
-     * @Route("/show/{slug}", name="app_workout_show")
+     * @Route("show/{slug}", name="app_workout_show")
      */
     public function show(Workout $workout)
     {
@@ -33,4 +33,5 @@ class WorkoutController extends AbstractController
            'workout'    =>  $workout
         ]);
     }
+
 }

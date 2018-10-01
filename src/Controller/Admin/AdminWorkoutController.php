@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminWorkoutController extends AbstractController
 {
     /**
-     * @Route("/workout/new", name="app_workout_new")
+     * @Route("/workout/new", name="admin_workout_new")
      */
     public function new(){
         return "test";

@@ -3,9 +3,11 @@
 namespace App\DataFixtures;
 
 use App\Entity\Exercice;
+use App\Entity\Workout;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ExerciceFixture extends BaseFixture
+class ExerciceFixture extends BaseFixture implements DependentFixtureInterface
 {
     private static $exerciceName = [
         'Squat',
@@ -23,7 +25,8 @@ class ExerciceFixture extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Exercice::class, 10, function (Exercice $exercice, $count) {
+
+        $this->createMany(Exercice::class, 50, function (Exercice $exercice, $count) {
             $exercice
                 ->setName($this->faker->randomElement(self::$exerciceName))
                 ->setCategory($this->faker->randomElement(self::$exerciceCategory))
@@ -39,8 +42,18 @@ class ExerciceFixture extends BaseFixture
             if ($this->faker->boolean(70)){
                 $exercice->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
+
+            $exercice->addWorkout($this->getRandomReference(Workout::class));
         });
 
         $manager->flush();
+
     }
+
+    public function getDependencies()
+    {
+        return [WorkoutFixtures::class];
+    }
+
+
 }

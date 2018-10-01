@@ -25,7 +25,8 @@ class WorkoutRepository extends ServiceEntityRepository
      */
     public function findAllPublishedWorkoutByNewest()
     {
-        return $this->addPublishedWorkout()
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.publishedAt IS NOT NULL')
             ->orderBy('w.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
@@ -33,7 +34,7 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     private function addPublishedWorkout(QueryBuilder $qb = null){
-        return $this->createQueryBuilder($qb)
+        return $this->getOrCreatQueryBuilder($qb)
             ->andWhere('w.publishedAt IS NOT NULL');
     }
 

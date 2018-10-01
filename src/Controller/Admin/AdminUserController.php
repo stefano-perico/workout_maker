@@ -11,19 +11,18 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/admin/")
  */
 class AdminUserController extends AbstractController
 {
     /**
-     * @Route("users/index", name="app_admin_user_index")
+     * @Route("users/index", name="admin_user_index")
      */
     public function index(UserRepository $repository){
         $users = $repository->findAll();
@@ -34,7 +33,7 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * @Route("show/{id}", name="app_admin_user_show")
+     * @Route("show/{id}", name="admin_user_show")
      */
     public function show(User $user)
     {

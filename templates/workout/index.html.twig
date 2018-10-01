@@ -38,137 +38,30 @@
     <section>
 
         <!-- Workout section -->
-        <a href="#" class="white-text">
+        {% for workout in workouts %}
+        <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
             <article class="media">
                 <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
                 <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
+                    <p class="font-weight-bold mb-0">{{ workout.name }}</p>
                     <p class="mb-0">
+                        <!-- TODO add popularity -->
                         <i class="fa fa-star orange-text-wm"> </i>
                         <i class="fa fa-star orange-text-wm"> </i>
                         <i class="fa fa-star orange-text-wm"> </i>
                         <i class="fa fa-star orange-text-wm"> </i>
                         <i class="fa fa-star orange-text-wm"> </i>
                     </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
+
+                    <p class="mb-0">{{ workout.category }}</p>
+                    <p class="mb-0">{{ workout.difficulty.level }} <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
                     <p class="mb-0">Auteur : Froste L</p>
                 </aside>
             </article>
         </a>
 
         <hr class="hr-wm">
-        <!-- /Workout section -->
-
-        <!-- Workout section -->
-        <a href="#" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
-
-        <hr class="hr-wm">
-        <!-- /Workout section -->
-        <!-- Workout section -->
-        <a href="#" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
-
-        <hr class="hr-wm">
-        <!-- /Workout section -->
-        <!-- Workout section -->
-        <a href="#" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
-
-        <hr class="hr-wm">
-        <!-- /Workout section -->
-        <!-- Workout section -->
-        <a href="#" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
-
-        <hr class="hr-wm">
-        <!-- /Workout section -->
-        <!-- Workout section -->
-        <a href="#" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">Fran</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">Tronc, Bas du corps</p>
-                    <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
-
-        <hr class="hr-wm">
+        {% endfor %}
         <!-- /Workout section -->
 
     </section>
