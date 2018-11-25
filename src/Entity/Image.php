@@ -19,35 +19,38 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=80, nullable=true)
      */
     private $src;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=80, nullable=true)
      */
     private $alt;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="image")
+     * @ORM\Column(nullable=true)
      */
     private $programs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="image")
+     * @ORM\Column(nullable=true)
      */
     private $workouts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Exercice", mappedBy="image")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $exercices;
+    private $base64Encode;
+
 
     public function __construct()
     {
         $this->programs = new ArrayCollection();
         $this->workouts = new ArrayCollection();
-        $this->exercices = new ArrayCollection();
+        $this->exercises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,7 +65,7 @@ class Image
 
     public function setSrc(string $src): self
     {
-        $this->src = $src;
+        $this->src = base64_encode($src);
 
         return $this;
     }
@@ -141,34 +144,17 @@ class Image
         return $this;
     }
 
-    /**
-     * @return Collection|Exercice[]
-     */
-    public function getExercices(): Collection
+    public function getBase64Encode(): ?string
     {
-        return $this->exercices;
+        return base64_decode($this->base64Encode);
     }
 
-    public function addExercice(Exercice $exercice): self
+    public function setBase64Encode(string $base64Encode): self
     {
-        if (!$this->exercices->contains($exercice)) {
-            $this->exercices[] = $exercice;
-            $exercice->setImage($this);
-        }
+        $data = base64_encode(file_get_contents($_FILES[$base64Encode]));
+        $this->base64Encode = $base64Encode;
 
         return $this;
     }
 
-    public function removeExercice(Exercice $exercice): self
-    {
-        if ($this->exercices->contains($exercice)) {
-            $this->exercices->removeElement($exercice);
-            // set the owning side to null (unless already changed)
-            if ($exercice->getImage() === $this) {
-                $exercice->setImage(null);
-            }
-        }
-
-        return $this;
-    }
 }

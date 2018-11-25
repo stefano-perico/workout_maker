@@ -10,7 +10,7 @@
 {% block header %}
     {{ parent() }}
     <!--Mask-->
-    <section id="intro" class="view">
+    <section id="intro" class="view mb-5">
         <div class="mask rgba-black-light">
             <div class="container-fluid d-flex align-items-center justify-content-center h-100">
                 <div class="row d-flex justify-content-center text-center">
@@ -27,13 +27,15 @@
         </div>
     </section>
     <!--/Mask-->
+
 {% endblock %}
 
 {% block body %}
-    <section class="mt-5 container">
+
+    <section class="container pt-5">
         <!--Section: Best Features-->
         <section id="best-features" class="text-center white-text">
-            <h2 class="font-weight-bold mb-5 ">Best Features</h2>
+            <h2 class="font-weight-bold my-5 ">Best Features</h2>
             <aside class="row d-flex justify-content-center mb-4">
                 <p class="col-mb-8">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolorum ex hic itaque nam repellat velit vero. Consectetur consequatur dolor facere fugiat harum ipsum laudantium nihil nostrum, sed, sint voluptates!
@@ -77,87 +79,39 @@
 
         <hr class="my-5 hr-wm">
 
-        <section class="white-text">
-            <h2 class="text-center font-weight-bold mb-4">last workout</h2>
+        <section>
+            <h2 class="text-center font-weight-bold white-text mb-4">last workout</h2>
 
             <!-- Workout section -->
-            <a href="#" class="white-text">
-                <article class="media">
-                    <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                    <aside class="media-body">
-                        <p class="font-weight-bold mb-0">Fran</p>
-                        <p class="mb-0">
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                        </p>
-                        <p class="mb-0">Tronc, Bas du corps</p>
-                        <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                        <p class="mb-0">Auteur : Froste L</p>
-                    </aside>
-                </article>
-            </a>
-
-            <hr class="hr-wm">
-            <!-- /Workout section -->
-
-            <!-- Workout section -->
-            <a href="#" class="white-text">
-                <article class="media">
-                    <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                    <aside class="media-body">
-                        <p class="font-weight-bold mb-0">Fran</p>
-                        <p class="mb-0">
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                        </p>
-                        <p class="mb-0">Tronc, Bas du corps</p>
-                        <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                        <p class="mb-0">Auteur : Froste L</p>
-                    </aside>
-                </article>
-            </a>
-
-            <hr class="hr-wm">
-            <!-- /Workout section -->
-
-            <!-- Workout section -->
-            <a href="#" class="white-text">
-                <article class="media">
-                    <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                    <aside class="media-body">
-                        <p class="font-weight-bold mb-0">Fran</p>
-                        <p class="mb-0">
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                            <i class="fa fa-star orange-text-wm"> </i>
-                        </p>
-                        <p class="mb-0">Tronc, Bas du corps</p>
-                        <p class="mb-0">Difficulté <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                        <p class="mb-0">Auteur : Froste L</p>
-                    </aside>
-                </article>
-            </a>
-
-            <aside class="text-center mt-5">
-                <a href="{{ path('app_workouts') }}" class="btn btn-wm">See more</a>
-            </aside>
-
-            <!-- /Workout section -->
+            {% for workout in workouts %}
+                <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
+                    <article class="media">
+                        <img class="d-flex align-self-center mr-3"
+                             src="
+                                {% if workout.imageName %}
+                                    {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') }}
+                                {% else %}
+                                    {{ asset('images/workouts/default.jpg') | imagine_filter('thumb') }}
+                                {% endif %}"
+                             alt="Generic placeholder image">
+                        <aside class="media-body">
+                            <h5 class="font-weight-bold mb-0">
+                                {{ workout.name }}
+                                <span> <!-- TODO add popularity <i class="fa fa-star orange-text-wm"> </i>--></span>
+                            </h5>
+                            <p class="mb-0"><strong>By :</strong> {{ workout.user.email }} </p>
+                            <p><strong>{{ workout.publishedAT|ago }}</strong></p>
+                        </aside>
+                    </article>
+                </a>
+                <hr class="hr-wm">
+            {% endfor %}
 
         </section>
 
-        <hr class="my-5 hr-wm">
 
         <!--Section: Contact-->
-        <section id="contact">
+        <section id="contact" class="mt-5">
 
             <!-- Heading -->
             <h2 class="font-weight-bold text-center white-text mb-3">Contact us</h2>

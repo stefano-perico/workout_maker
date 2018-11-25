@@ -6,13 +6,17 @@
     {{ parent() }}
 
     <section class="container nav-wm white-text px-4">
-        <aside class="row d-flex justify-content-between mb-3">
 
-            <span class="font-weight-bold"><i class="fa fa-arrow-left fa-2x mr-2" aria-hidden="true"></i>Workouts</span>
-
-            <span><i class="fa fa-search fa-2x" aria-hidden="true"></i></span>
-
-        </aside>
+        <form class="form-inline md-form mt-2">
+            <input class="form-control form-control-sm mr-3 w-75"
+                   name="search"
+                   type="text"
+                   placeholder="Search"
+                   value="{{ app.request.query.get('search') }}"
+                   aria-label="Search"
+            >
+            <i class="fa fa-search white-text" aria-hidden="true"></i>
+        </form>
 
         <aside class="row d-flex justify-content-between">
 
@@ -36,29 +40,30 @@
 
 {% block body %}
     <section>
+        <h1 class="white-text mb-5">Workouts ({{ workouts|length }})</h1>
 
         <!-- Workout section -->
         {% for workout in workouts %}
-        <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
-            <article class="media">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">{{ workout.name }}</p>
-                    <p class="mb-0">
-                        <!-- TODO add popularity -->
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-
-                    <p class="mb-0">{{ workout.category }}</p>
-                    <p class="mb-0">{{ workout.difficulty.level }} <i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">Auteur : Froste L</p>
-                </aside>
-            </article>
-        </a>
+            <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
+                <article class="media">
+                    <img class="d-flex align-self-center mr-3"
+                         src=
+                            "{% if workout.imageName %}
+                                {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') }}
+                            {% else %}
+                                {{ asset('images/workouts/default.jpg') | imagine_filter('thumb') }}
+                            {% endif %}"
+                         alt="Generic placeholder image">
+                    <aside class="media-body">
+                        <h5 class="font-weight-bold mb-0">
+                            {{ workout.name }}
+                            <span> <!-- TODO add popularity <i class="fa fa-star orange-text-wm"> </i>--></span>
+                        </h5>
+                        <p class="mb-0"><strong>By :</strong> {{ workout.user.email }} </p>
+                        <p><strong>{{ workout.publishedAT|ago }}</strong></p>
+                    </aside>
+                </article>
+            </a>
 
         <hr class="hr-wm">
         {% endfor %}

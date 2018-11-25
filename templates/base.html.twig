@@ -4,30 +4,32 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{% block title %}Workout Maker!{% endblock %}</title>
+        <title>{% block title %}Workout Maker{% endblock %}</title>
         {% block stylesheets %}
             <!-- Font Awesome -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
             <!-- Bootstrap core CSS -->
-            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
             <!-- Material Design Bootstrap -->
             <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
             <!-- Your custom styles (optional) -->
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+            <!-- Jquery ui -->
+            <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
         {% endblock %}
     </head>
     <body>
         <!-- Main header navigation -->
         <header>
             {% block header %}
-            <!--Navbar-->
+
                 <!--Navbar-->
-                <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+                <nav class="navbar navbar-expand-lg navbar-dark">
 
                 <div class="container">
                     <!-- Navbar brand -->
-                    <a class="navbar-brand" href="#">WM</a>
+                    <a class="navbar-brand" href="{{ path('app_homepage') }}">WM</a>
 
                     <!-- Collapse button -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
@@ -46,17 +48,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_workouts') }}">Workouts</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Program</a>
-                            </li>
                         </ul>
                         <!-- Links -->
 
                         <ul class="navbar-nav nav-flex-icons">
                             {% if is_granted('ROLE_USER') %}
-                            <li class="nav-item dropdown" style="margin-right: 75px;">
+                            <li class="nav-item dropdown mr-3">
                                 <a class="nav-link dropdown-toggle" href="{{ path('app_account') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user fa-2x mr-2"></i>
+                                    <img src="{{ app.user.avatarUrl(30) }}" class="img-responsive thumbnail">
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
@@ -78,62 +77,28 @@
                 </div>
             </nav>
             <!--/.Navbar-->
+
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <aside class="alert alert-warning">
+                    You are currently switched to this user: {{ app.user.email }}
+                    <a href="{{ path('app_homepage', {
+                        '_switch_user': '_exit'
+                    }) }}">Exit Impersonation</a>
+                </aside>
+            {% endif %}
+
             {% endblock %}
         </header>
         <!-- /Main header navigation -->
 
         <!-- Main layout -->
-        <main class="container">
+        <main class="container mt-5">
             {% block body %}{% endblock %}
         </main>
         <!-- /Main layout -->
 
         <!-- Footer -->
-        <footer class="page-footer font-small">
-
-            <!-- Footer Elements -->
-            <div class="container">
-
-                <!-- Grid row-->
-                <div class="row">
-
-                    <!-- Grid column -->
-                    <div class="col-md-12 py-5">
-                        <div class="mb-5 flex-center">
-
-                            <!-- Facebook -->
-                            <a class="fb-ic">
-                                <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"></i>
-                            </a>
-                            <!-- Twitter -->
-                            <a class="tw-ic">
-                                <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                            </a>
-                            <!-- Google +-->
-                            <a class="gplus-ic">
-                                <i class="fab fa-google-plus fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                            </a>
-                            <!--Linkedin -->
-                            <a class="li-ic">
-                                <i class="fab fa-linkedin fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                            </a>
-                            <!--Instagram-->
-                            <a class="ins-ic">
-                                <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                            </a>
-                            <!--Pinterest-->
-                            <a class="pin-ic">
-                                <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Grid column -->
-
-                </div>
-                <!-- Grid row-->
-
-            </div>
-            <!-- Footer Elements -->
+        <footer class="page-footer font-small mt-5">
 
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3">© 2018 Copyright:
@@ -148,12 +113,12 @@
             <!-- SCRIPTS -->
             <!-- JQuery -->
             <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-            <!-- Bootstrap tooltips -->
-            <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
             <!-- Bootstrap core JavaScript -->
-            <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.js') }}"></script>
             <!-- MDB core JavaScript -->
             <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+            <!-- Jquery ui -->
+            <script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}" ></script>
         {% endblock %}
 
         {% block javascripts %}{% endblock %}

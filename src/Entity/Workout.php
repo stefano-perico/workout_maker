@@ -7,9 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkoutRepository")
+ * @Vich\Uploadable()
  */
 class Workout
 {
@@ -33,30 +38,9 @@ class Workout
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=80)
-     */
-    private $category;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Difficulty", inversedBy="workouts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $difficulty;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Program", mappedBy="workouts")
      */
     private $programs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Exercice", inversedBy="workouts")
-     */
-    private $exercices;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Image", inversedBy="workouts")
-     */
-    private $image;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
@@ -69,11 +53,42 @@ class Workout
      */
     private $publishedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="workouts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Exercise",
+     *     mappedBy="workout",
+     *     fetch="EXTRA_LAZY",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
+     * )
+     * @Assert\Valid()
+     */
+    private $exercises;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageName;
+
+    /**
+     * @var File|null
+     * @Assert\Image(
+     *     mimeTypes="image/jpeg"
+     * )
+     * @Vich\UploadableField(mapping="workout_image", fileNameProperty="imageName")
+     */
+    private $imageFile;
 
     public function __construct()
     {
         $this->programs = new ArrayCollection();
-        $this->exercices = new ArrayCollection();
+        $this->exercises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,30 +116,6 @@ class Workout
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getDifficulty(): ?Difficulty
-    {
-        return $this->difficulty;
-    }
-
-    public function setDifficulty(?Difficulty $difficulty): self
-    {
-        $this->difficulty = $difficulty;
 
         return $this;
     }
@@ -157,44 +148,6 @@ class Workout
         return $this;
     }
 
-    /**
-     * @return Collection|Exercice[]
-     */
-    public function getExercices(): Collection
-    {
-        return $this->exercices;
-    }
-
-    public function addExercice(Exercice $exercice): self
-    {
-        if (!$this->exercices->contains($exercice)) {
-            $this->exercices[] = $exercice;
-        }
-
-        return $this;
-    }
-
-    public function removeExercice(Exercice $exercice): self
-    {
-        if ($this->exercices->contains($exercice)) {
-            $this->exercices->removeElement($exercice);
-        }
-
-        return $this;
-    }
-
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(?Image $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -216,6 +169,87 @@ class Workout
     {
         $this->publishedAt = $publishedAt;
 
+        return $this;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->publishedAt !== null;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Exercise[]
+     */
+    public function getExercises(): Collection
+    {
+        return $this->exercises;
+    }
+
+    public function addExercise(Exercise $exercise): self
+    {
+        if (!$this->exercises->contains($exercise)) {
+            $this->exercises[] = $exercise;
+            $exercise->setWorkout($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExercise(Exercise $exercise): self
+    {
+        if ($this->exercises->contains($exercise)) {
+            $this->exercises->removeElement($exercise);
+            // set the owning side to null (unless already changed)
+            if ($exercise->getWorkout() === $this) {
+                $exercise->setWorkout(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Workout
+     */
+    public function setImageFile(?File $imageFile): Workout
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile instanceof UploadedFile){
+            $this->setUpdatedAt(new \DateTime('now'));
+        }
         return $this;
     }
 

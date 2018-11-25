@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -19,6 +22,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("main")
      */
     private $email;
 
@@ -31,6 +35,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="user")
+     */
+    private $workouts;
+
+    public function __construct()
+    {
+        $this->workouts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,5 +122,47 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Workout[]
+     */
+    public function getWorkouts(): Collection
+    {
+        return $this->workouts;
+    }
+
+    public function addWorkout(Workout $workout): self
+    {
+        if (!$this->workouts->contains($workout)) {
+            $this->workouts[] = $workout;
+            $workout->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkout(Workout $workout): self
+    {
+        if ($this->workouts->contains($workout)) {
+            $this->workouts->removeElement($workout);
+            // set the owning side to null (unless already changed)
+            if ($workout->getUser() === $this) {
+                $workout->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAvatarUrl(int $size = null): string
+    {
+        $url = 'https://robohash.org/'.$this->getEmail();
+
+        if ($size) {
+            $url .= sprintf('?size=%dx%d', $size, $size);
+        }
+
+        return $url;
     }
 }

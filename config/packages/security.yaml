@@ -10,6 +10,10 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN_COMMENT, ROLE_ADMIN_WORKOUT, ROLE_ALLOWED_TO_SWITCH]
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -28,6 +32,7 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 2592000
 
+            switch_user: true
 
             # activate different ways to authenticate
 

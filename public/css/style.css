@@ -5,12 +5,6 @@ body,
     height: 100%;
 }
 
-
-.btn-wm {
-    border-radius: 24px;
-    background: #FF6A0D;
-}
-
 #intro {
     background: url("../img/home.jpg")no-repeat center center;
     -webkit-background-size: cover;
@@ -39,13 +33,13 @@ footer {
     background-color: #526266;
 }
 
-.first-section-wm {
-    margin-top: 5rem;
+.background-white-wm{
+    background-color: #FFFFFF
 }
 
-.nav-wm {
-    height: 140px;
-    padding-top: 70px;
+.btn-wm {
+    border-radius: 24px;
+    background: #FF6A0D;
 }
 
 .btn-filter-wm {
@@ -64,4 +58,15 @@ footer {
 .btn-outline-wm:hover {
     background-color: #FF6A0D;
     color: white;
+}
+
+.wm-exercise {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #7F7378;
+}
+
+.wm-exercise image {
+    border-radius: 10px;
 }

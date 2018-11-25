@@ -3,7 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Difficulty;
-use App\Entity\Exercice;
+use App\Entity\Exercise;
+use App\Entity\User;
 use App\Entity\Workout;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -15,7 +16,7 @@ class WorkoutFixtures extends BaseFixture
         'Alice',
     ];
 
-    private static $exerciceCategory = [
+    private static $exerciseCategory = [
         'Trunk',
         'Arms',
         'Lower body',
@@ -40,7 +41,7 @@ class WorkoutFixtures extends BaseFixture
             $workout
                 ->setName($this->faker->randomElement(self::$workoutName))
                 ->setDifficulty($difficulty1)
-                ->setCategory($this->faker->randomElement(self::$exerciceCategory))
+                ->setCategory($this->faker->randomElement(self::$exerciseCategory))
                 ->setDescription(
                     'Laboris beef ribs fatback fugiat eiusmod jowl kielbasa alcatra dolore velit ea ball tip. Pariatur
                                 laboris sunt venison, et laborum dolore minim non meatball. Shankle eu flank aliqua shoulder,
@@ -53,6 +54,8 @@ class WorkoutFixtures extends BaseFixture
             if ($this->faker->boolean(70)){
                 $workout->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
+
+            $workout->setUser($this->getRandomReference(User::class));
         });
 
         $manager->flush();

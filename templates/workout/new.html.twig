@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article class="first-section-wm white-text">
+        {{ include('workout/_form.html.twig') }}
+    </article>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/workoutForm.js') }}"></script>
+{% endblock %}

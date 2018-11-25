@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article id="js-workout-container" class="first-section-wm white-text" data-workout-id="{{ workout.id }}">
+        {{ include('workout/_form.html.twig') }}
+    </article>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/workoutForm.js') }}"></script>
+{% endblock %}

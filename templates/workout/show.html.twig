@@ -1,73 +1,53 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Workouts{% endblock %}
-
-{% block header %}
-    {{ parent() }}
-
-    <section class="container nav-wm white-text px-4">
-        <aside class="row d-flex justify-content-between mb-3">
-
-            <span class="font-weight-bold"><i class="fa fa-arrow-left fa-2x mr-2" aria-hidden="true"></i>Workouts</span>
-
-            <span><i class="fa fa-search fa-2x" aria-hidden="true"></i></span>
-
-        </aside>
-
-        <aside class="row d-flex justify-content-between">
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Débutant</a>
-            </span>
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Intermédiaire</a>
-            </span>
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Avancé</a>
-            </span>
-
-        </aside>
-
-    </section>
-    <hr class="hr-wm">
-{% endblock %}
+{% block title %}Workout{% endblock %}
 
 {% block body %}
-    <section>
+    <section class="card">
+            <article class="view" >
+                <img src="
+                {% if workout.imageName %}
+                    {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium')}}
+                {% else %}
+                    {{ asset('images/workouts/default.jpg') }}
+                {% endif %}
+                " class="card-img-top" alt="workout's image">
+                <aside class="mask d-flex align-items-end rgba-black-light">
+                    <div class="ml-4 white-text">
+                        <h2 class="font-weight-bold">
+                            {{ workout.name }}
+                            <span class="ml-2">
+                                <!-- TODO add popularity <i class="fa fa-star orange-text-wm"> </i>-->
+                            </span>
+                        </h2>
+                        <p>
+                            By : <strong>{{ workout.user.email }}</strong> <br>
+                            {{ workout.publishedAt | ago }}
+                        </p>
+                    </div>
+                </aside>
+            </article>
 
         <!-- Workout section -->
-            <article class="media white-text">
-                <img class="d-flex align-self-center mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image">
-                <aside class="media-body">
-                    <p class="font-weight-bold mb-0">{{ workout.name }}</p>
-                    <p class="mb-0">
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                        <i class="fa fa-star orange-text-wm"> </i>
-                    </p>
-                    <p class="mb-0">{{ workout.category }}</p>
-                    <p class="mb-0">{{ workout.difficulty.level }}<i class="fa fa-circle orange-text-wm"></i>  <i class="far fa-circle orange-text-wm"></i> <i class="far fa-circle orange-text-wm"></i></p>
-                    <p class="mb-0">{{ workout.description }}</p>
-                    <p class="mb-0">Auteur : Froste L {{ workout.publishedAt | ago }}</p>
-                </aside>
+            <article class="card-body elegant-color white-text">
+                <h3 class="mb-3">Description</h3>
+                <p class="mb-0">{{ workout.description }}</p>
 
+                <hr class="hr-wm">
+
+                <h3 class="mb-3">Exercises</h3>
+
+                {% for exercise in workout.exercises %}
+                    <aside class="media d-flex align-items-center wm-exercise my-2">
+                        <img class="mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
+                        <div class="">
+                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} <strong>{{ exercise.reps }}x 15</strong></a></h5>
+                        </div>
+                    </aside>
+                {% endfor %}
+
+                <hr class="hr-wm">
             </article>
 
         <!-- /Workout section -->
-
-        <hr class="hr-wm">
-
-        {% for exercice in workout.exercices %}
-            <aside class="white-text">
-                <h5>{{ exercice.name }}</h5>
-                <p>{{ exercice.category }}</p>
-            </aside>
-        {% endfor %}
-
-
     </section>
 {% endblock %}

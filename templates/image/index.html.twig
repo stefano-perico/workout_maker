@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="example-wrapper">
+{% for img in image %}
+    <img src="data:image/png;base64,{{ img.base64Encode }}" alt="{{ img.alt }}">
+{% endfor %}
+
+{{ form_start(imageForm) }}
+   {{ form_row(imageForm) }}
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    {{ form_end(imageForm) }}
+  </div>
+{% endblock %}

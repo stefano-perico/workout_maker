@@ -24,25 +24,17 @@ class Difficulty
     private $level;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="difficulty")
-     */
-    private $workouts;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="difficulty")
      */
     private $programs;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Exercice", mappedBy="difficulty")
-     */
-    private $exercices;
 
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
         $this->programs = new ArrayCollection();
-        $this->exercices = new ArrayCollection();
+        $this->exercises = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -124,34 +116,10 @@ class Difficulty
         return $this;
     }
 
-    /**
-     * @return Collection|Exercice[]
-     */
-    public function getExercices(): Collection
+    public function __toString()
     {
-        return $this->exercices;
+        return $this->getLevel();
     }
 
-    public function addExercice(Exercice $exercice): self
-    {
-        if (!$this->exercices->contains($exercice)) {
-            $this->exercices[] = $exercice;
-            $exercice->setDifficulty($this);
-        }
 
-        return $this;
-    }
-
-    public function removeExercice(Exercice $exercice): self
-    {
-        if ($this->exercices->contains($exercice)) {
-            $this->exercices->removeElement($exercice);
-            // set the owning side to null (unless already changed)
-            if ($exercice->getDifficulty() === $this) {
-                $exercice->setDifficulty(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -23,14 +23,57 @@ class WorkoutRepository extends ServiceEntityRepository
     /**
      * @return Workout[] Returns an array of Workout objects
      */
-    public function findAllPublishedWorkoutByNewest()
+    public function findAllPublishedWorkoutByNewestWithSearchQueryBuilder(?string $term): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('w')
+            ->innerJoin('w.user', 'u')
+            ->addSelect('u')
+            ->andWhere('w.publishedAt IS NOT NULL')
+        ;
+
+        if ($term){
+            $qb->andWhere('w.name LIKE :term OR w.description LIKE :term OR u.email LIKE :term')
+                ->setParameter('term', '%'.$term.'%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('w.publishedAt', 'ASC');
+    }
+
+    /**
+     * @return Workout[] Returns an array of Workout objects
+     */
+    public function findThreeLastPublishedWorkouts()
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.publishedAt IS NOT NULL')
-            ->orderBy('w.publishedAt', 'DESC')
+            ->setMaxResults(3)
+            ->orderBy('w.publishedAt', 'ASC')
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * @param null|string $term
+     */
+    public function findAllWithSearchQueryBuilder(?string $term): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('w')
+            ->innerJoin('w.user', 'u')
+            ->addSelect('u')
+        ;
+
+        if ($term){
+            $qb->andWhere('w.name LIKE :term OR w.description LIKE :term OR u.email LIKE :term')
+                ->setParameter('term', '%'.$term.'%')
             ;
+        }
+
+        return $qb
+            ->orderBy('w.createdAt', 'DESC')
+        ;
     }
 
     private function addPublishedWorkout(QueryBuilder $qb = null){
@@ -39,7 +82,7 @@ class WorkoutRepository extends ServiceEntityRepository
     }
 
     private function getOrCreatQueryBuilder(QueryBuilder $qb = null){
-        return $qb ?: $this->createQueryBuilder($qb);
+        return $qb ?: $this->createQueryBuilder('w');
     }
 
 //    /**

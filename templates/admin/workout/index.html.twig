@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="row background-white-wm mt-3">
+        <article class="col-sm-12">
+            <h1>Manage Workouts ({{ workouts.getTotalItemCount }})</h1>
+
+            <form>
+                <aside class="input-group md-form form-sm form-2 pl-0 mb-3">
+                    <input class="form-control my-0 py-1 amber-border"
+                           name="search"
+                           type="text"
+                           placeholder="Search..."
+                           value="{{ app.request.query.get('search') }}"
+                   >
+                    <aside class="input-group-append">
+                        <button type="submit"
+                                class="btn btn-outline-secondary">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </aside>
+                </aside>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Workout</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Updated</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for workout in workouts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
+                                {{ workout.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ workout.user.email }}
+                        </td>
+                        <td style="width: 20%">
+                            {{ workout.description|truncate }}
+                        </td>
+                        <td>
+                            {{ workout.createdAt|ago }}
+                        </td>
+                        <td>
+                            {{ workout.updatedAt|ago }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No workouts found
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(workouts) }}
+        </article>
+    </section>
+{% endblock %}

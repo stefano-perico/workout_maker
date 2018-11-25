@@ -1,0 +1,50 @@
+{% import _self as formMacros %}
+
+{% macro printExerciseRow(exerciseForm)%}
+    <aside class="js-workout-exercise-item media d-flex align-items-center wm-exercise my-2">
+        <img class="mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
+        <div class="media-body">
+            <div class="row d-flex align-items-center">
+                {{ form_errors(exerciseForm) }}
+                <span class="col-12 col-sm-7">{{ form_row(exerciseForm.exerciseName) }}</span>
+                <span class="col-10 col-sm-3">{{ form_row(exerciseForm.reps) }}</span>
+                <span class="col-2">
+                    <a href="#" class="js-remove-exercise">
+                        <i class="fa fa-trash orange-text-wm"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </aside>
+{% endmacro %}
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {% if workout.imageName %}
+        <img src="{{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium') }}" alt="workout's image">
+    {% endif %}
+    {{ form_row(form.imageFile) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    <h3>Exercises</h3>
+    <aside class="js-workout-exercise-wrapper"
+           data-prototype="{{ formMacros.printExerciseRow(form.exercises.vars.prototype)|e('html_attr') }}"
+           data-index="{{ form.exercises|length }}"
+    >
+
+        {% for exerciseForm in form.exercises %}
+            {{ formMacros.printExerciseRow(exerciseForm) }}
+        {% endfor %}
+
+        <a href="#" class="btn btn-wm js-workout-exercise-add">
+            <span class="fa fa-plus-circle">
+                Add an exercise
+            </span>
+        </a>
+    </aside>
+    {# prevents weird label from showing up in new #}
+    {{ form_widget(form.exercises) }}
+
+<button type="submit" class="btn btn-primary">Save</button>
+{{ form_end(form) }}

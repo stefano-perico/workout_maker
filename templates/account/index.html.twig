@@ -1,9 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Account{% endblock %}
+{% block title %}Manage Account!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/account.css') }}">
+{% endblock %}
 
 {% block body %}
-    <section class="first-section-wm">
-        <h1>Manage your account</h1>
+    <section>
+        <div class="row user-menu-container square">
+            <div class="col-md-12 user-details">
+                <div class="row spacepurplebg white">
+                    <div class="col-md-2 no-pad">
+                        <div class="user-image">
+                            <img src="{{ app.user.avatarUrl }}" class="img-responsive thumbnail">
+                        </div>
+                    </div>
+                    <div class="col-md-10 no-pad">
+                        <div class="user-pad">
+                            <h3 class="grey-text">Welcome back, {{ app.user.email }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row overview">
+                    <div class="col-12 user-pad text-center">
+                        <h3>WORKOUTS</h3>
+                        <h4>{{ app.user.workouts | length }}</h4>
+                        <a href="{{ path('app_workout_new') }}" class="btn btn-wm">Creat New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if app.user.workouts | length > 0 %}
+            <article class="my-5">
+                <table class="table table-hover white-text">
+                    <thead class="black">
+                    <tr>
+                        <th scope="col">Workouts</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for workout in app.user.workouts %}
+                        <tr>
+                            <td><a class="white-text" href="{{ path('app_workout_show', {'slug': workout.slug}) }}">{{ workout.name }}</a></td>
+                            <td><a href="{{ path('app_workout_update', {'slug': workout.slug}) }}"><i class="fas fa-edit white-text"></i></a></td>
+                            <td><a href="#" class="js-remove-workout"><i class="fa fa-trash white-text"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </article>
+        {% endif %}
     </section>
 {% endblock %}
