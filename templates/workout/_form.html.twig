@@ -20,9 +20,12 @@
 
 {{ form_start(form) }}
     {{ form_errors(form) }}
-    {% if workout.imageName %}
-        <img src="{{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium') }}" alt="workout's image">
+    {% if workout is defined %}
+        {% if workout.imageName %}
+            <img src="{{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium') }}" alt="workout's image">
+        {% endif %}
     {% endif %}
+
     {{ form_row(form.imageFile) }}
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}

@@ -86,7 +86,9 @@ class WorkoutController extends AbstractController
             $em->persist($workout);
             $em->flush();
 
-            return $this->redirectToRoute('app_workout_show', ['slug' => $workout->getSlug()]);
+            $this->addFlash('success', 'Workout Created!');
+
+            return $this->redirectToRoute('app_account');
         }
 
         return $this->render('workout/update.html.twig', [

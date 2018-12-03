@@ -47,12 +47,7 @@
             <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
                 <article class="media">
                     <img class="d-flex align-self-center mr-3"
-                         src=
-                            "{% if workout.imageName %}
-                                {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') }}
-                            {% else %}
-                                {{ asset('images/workouts/default.jpg') | imagine_filter('thumb') }}
-                            {% endif %}"
+                         src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"
                          alt="Generic placeholder image">
                     <aside class="media-body">
                         <h5 class="font-weight-bold mb-0">

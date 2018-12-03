@@ -93,6 +93,12 @@
 
         <!-- Main layout -->
         <main class="container mt-5">
+            {% for message in app.flashes('success') %}
+                <aside class="alert alert-success">
+                    {{ message }}
+                </aside>
+            {% endfor %}
+
             {% block body %}{% endblock %}
         </main>
         <!-- /Main layout -->

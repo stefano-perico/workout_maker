@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ExercisesList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,23 @@ class ExercisesListRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, ExercisesList::class);
+    }
+
+    /**
+     * @return ExercisesList[] Returns an array of Workout objects
+     */
+    public function findAllExerciseByNewestWithSearchQueryBuilder(?string $term): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        if ($term){
+            $qb->andWhere('e.exercise LIKE :term OR e.description LIKE :term')
+                ->setParameter('term', '%'.$term.'%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('e.createdAt', 'DESC');
     }
 
 //    /**

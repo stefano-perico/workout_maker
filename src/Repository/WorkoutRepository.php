@@ -38,7 +38,7 @@ class WorkoutRepository extends ServiceEntityRepository
         }
 
         return $qb
-            ->orderBy('w.publishedAt', 'ASC');
+            ->orderBy('w.publishedAt', 'DESC');
     }
 
     /**
@@ -49,7 +49,7 @@ class WorkoutRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('w')
             ->andWhere('w.publishedAt IS NOT NULL')
             ->setMaxResults(3)
-            ->orderBy('w.publishedAt', 'ASC')
+            ->orderBy('w.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;

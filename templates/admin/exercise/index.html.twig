@@ -3,7 +3,12 @@
 {% block body %}
     <section class="row background-white-wm mt-3">
         <article class="col-sm-12">
-            <h1>Manage Workouts ({{ workouts.getTotalItemCount }})</h1>
+            <div class="row mt-3">
+                <h1 class="col-sm-10">Manage Exercises ({{ exercises.getTotalItemCount }})</h1>
+                <div class="col-sm-2 float-right">
+                    <a href="{{ path('admin_exercise_create') }}" class="btn btn-primary">Create <i class="fa fa-plus-circle"></i> </a>
+                </div>
+            </div>
 
             <form>
                 <aside class="input-group md-form form-sm form-2 pl-0 mb-3">
@@ -12,7 +17,7 @@
                            type="text"
                            placeholder="Search..."
                            value="{{ app.request.query.get('search') }}"
-                   >
+                    >
                     <aside class="input-group-append">
                         <button type="submit"
                                 class="btn btn-outline-secondary">
@@ -25,36 +30,36 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">Workout</th>
-                    <th scope="col">Author</th>
+                    <th scope="col">Exercise</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Published ?</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for workout in workouts %}
+                {% for exercise in exercises %}
                     <tr>
                         <td>
-                            <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
-                                {{ workout.name }}
+                            <a href="{{ path('app_exercise_show', {'slug': exercise.slug}) }}">
+                                {{ exercise.exercise }}
                             </a>
                         </td>
                         <td>
-                            {{ workout.user.email }}
+                            {{ exercise.description | truncate }}
                         </td>
                         <td>
-                            <span class="fa fa-{{ workout.isPublished ? 'check' : 'times' }}"></span>
+                            <span class="fa fa-{{ exercise.isPublished ? 'check' : 'times' }}"></span>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
                         <td colspan="5" class="text-center">
-                            No workouts found
+                            No exercises found
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            {{ knp_pagination_render(workouts) }}
+            {{ knp_pagination_render(exercises) }}
         </article>
     </section>
 {% endblock %}

@@ -4,13 +4,9 @@
 {% block body %}
     <section class="card">
             <article class="view" >
-                <img src="
-                {% if workout.imageName %}
-                    {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium')}}
-                {% else %}
-                    {{ asset('images/workouts/default.jpg') }}
-                {% endif %}
-                " class="card-img-top" alt="workout's image">
+                <img class="card-img-top"
+                     src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('medium') : asset('images/workouts/default.jpg') | imagine_filter('medium') }}"
+                     alt="workout's image">
                 <aside class="mask d-flex align-items-end rgba-black-light">
                     <div class="ml-4 white-text">
                         <h2 class="font-weight-bold">
@@ -40,7 +36,7 @@
                     <aside class="media d-flex align-items-center wm-exercise my-2">
                         <img class="mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
                         <div class="">
-                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} <strong>{{ exercise.reps }}x 15</strong></a></h5>
+                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} <strong>{{ exercise.reps }}</strong></a></h5>
                         </div>
                     </aside>
                 {% endfor %}
