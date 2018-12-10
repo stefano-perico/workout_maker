@@ -61,12 +61,47 @@ footer {
 }
 
 .wm-exercise {
-    border: 1px solid;
-    border-radius: 10px;
+    border-bottom: 6px solid #FF6A0D;
+    border-radius: 6px;
     padding: 10px;
     background-color: #7F7378;
 }
 
 .wm-exercise image {
     border-radius: 10px;
+}
+
+.btn-test {
+    border-radius: 50%;
+}
+
+.button2 {
+    -webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    padding:.84rem 2.14rem;font-size:.81rem;
+    -webkit-transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    -o-transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    margin:.375rem;
+    -webkit-border-radius:.125rem;
+    cursor:pointer;
+    text-transform:uppercase;
+    white-space:normal;
+    word-wrap:break-word;
+    color:#fff
+}
+
+.button {
+    -webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }

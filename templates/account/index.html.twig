@@ -6,6 +6,7 @@
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('css/account.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -15,7 +16,7 @@
                 <div class="row spacepurplebg white">
                     <div class="col-md-2 no-pad">
                         <div class="user-image">
-                            <img src="{{ app.user.avatarUrl }}" class="img-responsive thumbnail">
+                            <img class="img-responsive thumbnail" src="{{ app.user.avatarUrl }}" alt="user's image">
                         </div>
                     </div>
                     <div class="col-md-10 no-pad">
@@ -34,25 +35,35 @@
             </div>
         </div>
         {% if app.user.workouts | length > 0 %}
-            <article class="my-5">
-                <table class="table table-hover white-text">
-                    <thead class="black">
-                    <tr>
-                        <th scope="col">Workouts</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for workout in app.user.workouts %}
-                        <tr>
-                            <td><a class="white-text" href="{{ path('app_workout_show', {'slug': workout.slug}) }}">{{ workout.name }}</a></td>
-                            <td><a href="{{ path('app_workout_update', {'slug': workout.slug}) }}"><i class="fas fa-edit white-text"></i></a></td>
-                            <td><a href="#" class="js-remove-workout"><i class="fa fa-trash white-text"></i></a></td>
-                        </tr>
+            <article class="my-5 row">
+                  {% for workout in app.user.workouts %}
+                        <div class="col-lg-4 col-sm-6 col-12 mb-4">
+                            <div class="example-1 card-wm">
+                                <div class="wrapper">
+                                    <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
+                                        <img src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"
+                                             alt="workout's image">
+                                    </a>
+                                    <div class="date">
+                                        <span class="day">{{ workout.createdAt | ago }}</span>
+                                    </div>
+                                    <div class="data">
+                                        <div class="content">
+                                            <h3 class="title"><a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">{{ workout.name }}</a></h3>
+                                            <p class="text">{{ workout.description }}</p>
+                                            <label for="{{ workout.slug }}" class="menu-button"><span></span></label>
+                                        </div>
+                                        <input type="checkbox" id="{{ workout.slug }}" />
+                                        <ul class="menu-content">
+                                            <li><a href="{{ path('app_workout_update', {'slug': workout.slug}) }}" class="fas fa-edit"></a></li>
+                                            <li><a href="{{ path('app_workout_delete', {'id': workout.id}) }}" onclick="return confirm('are u sure?')" class="far fa-trash-alt"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
-                    </tbody>
-                </table>
+
             </article>
         {% endif %}
     </section>

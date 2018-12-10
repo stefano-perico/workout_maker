@@ -17,7 +17,7 @@
                         </h2>
                         <p>
                             By : <strong>{{ workout.user.email }}</strong> <br>
-                            {{ workout.publishedAt | ago }}
+                            {{ workout.createdAt | ago }}
                         </p>
                     </div>
                 </aside>
@@ -34,14 +34,15 @@
 
                 {% for exercise in workout.exercises %}
                     <aside class="media d-flex align-items-center wm-exercise my-2">
-                        <img class="mr-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
+
                         <div class="">
-                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} <strong>{{ exercise.reps }}</strong></a></h5>
+                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} </a></h5>
+                            <p>{{ exercise.reps }} reps</p>
                         </div>
+                        <img class="ml-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
                     </aside>
                 {% endfor %}
 
-                <hr class="hr-wm">
             </article>
 
         <!-- /Workout section -->

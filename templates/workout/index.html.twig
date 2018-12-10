@@ -2,63 +2,39 @@
 
 {% block title %}Workouts{% endblock %}
 
-{% block header %}
+{% block stylesheets %}
     {{ parent() }}
-
-    <section class="container nav-wm white-text px-4">
-
-        <form class="form-inline md-form mt-2">
-            <input class="form-control form-control-sm mr-3 w-75"
-                   name="search"
-                   type="text"
-                   placeholder="Search"
-                   value="{{ app.request.query.get('search') }}"
-                   aria-label="Search"
-            >
-            <i class="fa fa-search white-text" aria-hidden="true"></i>
-        </form>
-
-        <aside class="row d-flex justify-content-between">
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Débutant</a>
-            </span>
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Intermédiaire</a>
-            </span>
-
-            <span>
-                <a class="btn-filter-wm btn-outline-wm">Avancé</a>
-            </span>
-
-        </aside>
-
-    </section>
-    <hr class="hr-wm">
+    <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
 {% endblock %}
 
+
 {% block body %}
-    <section>
-        <h1 class="white-text mb-5">Workouts ({{ workouts|length }})</h1>
+    <section class="row">
+        <h1 class="col-12 white-text mb-5">Workouts <span class="badge badge-light">{{ workouts|length }}</span></h1>
 
         <!-- Workout section -->
         {% for workout in workouts %}
-            <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
-                <article class="media">
-                    <img class="d-flex align-self-center mr-3"
-                         src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"
-                         alt="Generic placeholder image">
-                    <aside class="media-body">
-                        <h5 class="font-weight-bold mb-0">
-                            {{ workout.name }}
-                            <span> <!-- TODO add popularity <i class="fa fa-star orange-text-wm"> </i>--></span>
-                        </h5>
-                        <p class="mb-0"><strong>By :</strong> {{ workout.user.email }} </p>
-                        <p><strong>{{ workout.publishedAT|ago }}</strong></p>
-                    </aside>
-                </article>
-            </a>
+            <div class="col-lg-4 col-sm-6 col-12 mb-4">
+                <div class="example-1 card-wm">
+                    <div class="wrapper" >
+                        <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
+                            <img src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"
+                                 alt="workout's image">
+                        </a>
+                        <div class="date">
+                            <span class="day">{{ workout.createdAt | ago }}</span>
+                        </div>
+                        <div class="data">
+                            <div class="content">
+                                <img src="{{ workout.user.avatarUrl(30) }}" class="img-responsive thumbnail">
+                                <span class="author">{{ workout.user.email }}</span>
+                                <h3 class="title"><a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">{{ workout.name }}</a></h3>
+                                <p class="text">{{ workout.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <hr class="hr-wm">
         {% endfor %}

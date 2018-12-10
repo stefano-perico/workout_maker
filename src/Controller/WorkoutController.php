@@ -8,6 +8,7 @@ use App\Form\WorkoutFormType;
 use App\Repository\WorkoutRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class WorkoutController extends AbstractController
     {
         $term = $request->query->get('search');
 
-        $queryBuilder = $repository->findAllPublishedWorkoutByNewestWithSearchQueryBuilder($term);
+        $queryBuilder = $repository->findAllWithSearchQueryBuilder($term);
 
         $workouts = $paginator->paginate(
             $queryBuilder, /* query NOT result */
@@ -64,6 +65,8 @@ class WorkoutController extends AbstractController
             $em->persist($workout);
             $em->flush();
 
+            $this->addFlash('success', 'Workout Created!');
+
             return $this->redirectToRoute('app_workout_show', ['slug' => $workout->getSlug()]);
         }
 
@@ -73,6 +76,7 @@ class WorkoutController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/update/{slug}", name="app_workout_update")
      */
     public function update(EntityManagerInterface $em, Request $request, Workout $workout)
@@ -86,9 +90,9 @@ class WorkoutController extends AbstractController
             $em->persist($workout);
             $em->flush();
 
-            $this->addFlash('success', 'Workout Created!');
+            $this->addFlash('success', 'Workout Updated!');
 
-            return $this->redirectToRoute('app_account');
+            return $this->redirectToRoute('app_workout_show', ['slug' => $workout->getSlug()]);
         }
 
         return $this->render('workout/update.html.twig', [
@@ -98,17 +102,17 @@ class WorkoutController extends AbstractController
     }
 
     /**
-     * @Route("/{workoutId}/{exerciseId}", name="app_exercise_delete")
-     * @Method("DELETE")
+     * @IsGranted("ROLE_USER")
+     * @Route("/delete/{id}", name="app_workout_delete")
      */
-    public function deleteExerciseAction(Workout $workout, Exercise $exercise){
-        $workout->removeExercise($exercise);
-        dd($workout);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($workout);
+    public function delete(EntityManagerInterface $em, Workout $workout)
+    {
+        $em->remove($workout);
         $em->flush();
+        $this->addFlash('success', 'Workout Removed!');
 
-        return new Response(null, 204);
+        return $this->redirectToRoute("app_account");
     }
+
 
 }
