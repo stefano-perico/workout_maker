@@ -49,6 +49,11 @@ class ExercisesList
      */
     private $publishedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\MuscleGroup", inversedBy="exercisesLists")
+     */
+    private $muscleGroup;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,6 +122,18 @@ class ExercisesList
     public function isPublished(): bool
     {
         return $this->publishedAt !== null;
+    }
+
+    public function getMuscleGroup(): ?MuscleGroup
+    {
+        return $this->muscleGroup;
+    }
+
+    public function setMuscleGroup(?MuscleGroup $muscleGroup): self
+    {
+        $this->muscleGroup = $muscleGroup;
+
+        return $this;
     }
 
 }

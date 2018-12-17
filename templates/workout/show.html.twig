@@ -33,15 +33,18 @@
                 <h3 class="mb-3">Exercises</h3>
 
                 {% for exercise in workout.exercises %}
-                    <aside class="media d-flex align-items-center wm-exercise my-2">
+                    <aside class="media wm-exercise my-2">
 
-                        <div class="">
+                        <div class="media-body">
                             <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} </a></h5>
                             <p>{{ exercise.reps }} reps</p>
                         </div>
-                        <img class="ml-3" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
+                        <img class="d-flex ml-3"
+                             src="{{ asset(exercise.exerciseName.muscleGroup.image) }}"
+                             alt="Generic placeholder image">
                     </aside>
                 {% endfor %}
+
 
             </article>
 

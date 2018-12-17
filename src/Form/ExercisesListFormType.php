@@ -3,8 +3,9 @@
 namespace App\Form;
 
 use App\Entity\ExercisesList;
+use App\Entity\MuscleGroup;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,10 +17,9 @@ class ExercisesListFormType extends AbstractType
         $builder
             ->add('exercise', TextType::class)
             ->add('description')
-            ->add('publishedAt', DateType::class, [
-                'widget' => 'single_text',
-                'attr'  =>  ['class'    =>  'js-datepicker'],
-                'html5' =>  false,
+            ->add('muscleGroup', EntityType::class, [
+                'class'         =>  MuscleGroup::class,
+                'choice_label'  =>  'name',
             ])
         ;
     }
