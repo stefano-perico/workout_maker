@@ -33,6 +33,7 @@
                     <th scope="col">Exercise</th>
                     <th scope="col">Description</th>
                     <th scope="col">Published ?</th>
+                    <th scope="col">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,13 @@
                         </td>
                         <td>
                             <span class="fa fa-{{ exercise.isPublished ? 'check' : 'times' }}"></span>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_exercise_update', {
+                                id: exercise.id
+                            }) }}">
+                                <span class="fas fa-edit"></span>
+                            </a>
                         </td>
                     </tr>
                 {% else %}

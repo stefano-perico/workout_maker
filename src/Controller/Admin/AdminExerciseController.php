@@ -69,4 +69,25 @@ class AdminExerciseController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/update/{id}", name="admin_exercise_update")
+     */
+    public function update(ExercisesList $exercisesList, EntityManagerInterface $em, Request $request){
+        $exerciseForm = $this->createForm(ExercisesListFormType::class, $exercisesList);
+
+        $exerciseForm->handleRequest($request);
+        if ($exerciseForm->isSubmitted() && $exerciseForm->isValid()){
+            $em->persist($exercisesList);
+            $em->flush();
+
+            $this->addFlash('success', 'Exercise Updated!');
+
+            return $this->redirectToRoute('admin_exercise_index');
+        }
+
+        return $this->render('admin/exercise/update.html.twig', [
+            'exerciseForm'  =>  $exerciseForm->createView(),
+        ]);
+    }
+
 }

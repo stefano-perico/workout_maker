@@ -1,0 +1,16 @@
+{{ form_start(exerciseForm) }}
+        {{ form_row(exerciseForm.exercise, {
+            label: 'Exercise name'
+        }) }}
+        {{ form_row(exerciseForm.description, {
+            label: 'Exercise description'
+        }) }}
+        {{ form_row(exerciseForm.publishedAt, {
+            label: 'Publication date'
+        }) }}
+        {{ form_row(exerciseForm.muscleGroup, {
+            label: 'Muscle Group'
+        }) }}
+
+<button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(exerciseForm) }}

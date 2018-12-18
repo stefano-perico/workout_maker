@@ -53,7 +53,7 @@ class WorkoutController extends AbstractController
     /**
      * @Route("/new", name="app_workout_new")
      */
-    public function new(EntityManagerInterface $em, Request $request)
+    public function create(EntityManagerInterface $em, Request $request)
     {
         $form = $this->createForm(WorkoutFormType::class);
 
@@ -85,8 +85,6 @@ class WorkoutController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            /** @var Workout $workout */
-            $workout = $form->getData();
             $em->persist($workout);
             $em->flush();
 

@@ -2,8 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserResgistrationFormType;
+use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -23,6 +30,41 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error'         => $error,
         ));
+    }
+
+    /**
+     * @Route("/register", name="app_register")
+     */
+    public function register(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardAuthenticatorHandler, LoginFormAuthenticator $formAuthenticator)
+    {
+        $registrationForm =  $this->createForm(UserResgistrationFormType::class);
+        $registrationForm->handleRequest($request);
+
+        if ($registrationForm->isSubmitted() && $registrationForm->isValid()){
+            /** @var User $user */
+            $user = $registrationForm->getData();
+
+            $user->setPassword($passwordEncoder->encodePassword(
+                $user,
+                $registrationForm['plainPassword']->getData()
+            ));
+
+            if (true === $registrationForm['agreeTerms']->getData()) {
+                $user->agreeTerms();
+            }
+
+            $em->persist($user);
+            $em->flush();
+            return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $formAuthenticator,
+                'main'
+            );
+        }
+        return $this->render('security/register.html.twig', [
+            'registrationForm'   => $registrationForm->createView(),
+        ]);
     }
 
     /**

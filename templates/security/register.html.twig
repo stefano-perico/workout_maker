@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% form_theme registrationForm _self %}
+{% block title %}Register{% endblock %}
+
+{%- block form_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+
+    {{- form_label(form) -}}
+    {{- form_errors(form) -}}
+    {{- form_widget(form, widget_attr) -}}
+    {{- form_help(form) -}}
+
+{%- endblock form_row -%}
+
+{% block body %}
+    <section class="first-section-wm mb-4">
+
+            {{ form_start(registrationForm, {
+                'attr': {'class': 'white-text border border-light p-5'}
+            }) }}
+                <h1 class="font-weight-bold orange-text-wm mb-4">Register</h1>
+                {{ form_row(registrationForm.email) }}
+
+                {{ form_row(registrationForm.plainPassword) }}
+
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <button class="btn btn-wm btn-block my-4" type="submit">Register</button>
+            {{ form_end(registrationForm) }}
+
+    </section>
+{% endblock %}
+
+
+

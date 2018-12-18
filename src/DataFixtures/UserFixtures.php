@@ -21,13 +21,14 @@ class UserFixtures extends BaseFixture
         $adminUser
             ->setEmail('admin@example.com')
             ->setPassword($this->userPasswordEncoder->encodePassword($adminUser,'test'))
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles(['ROLE_ADMIN'])
+            ->agreeTerms();
         $manager->persist($adminUser);
 
         $this->createMany(User::class, 10, function (User $user, $count) {
            $user->setEmail(sprintf('workout%d@example.com', $count));
            $user->setPassword($this->userPasswordEncoder->encodePassword($user,'test'));
-
+           $user->agreeTerms();
         });
 
         $manager->flush();
