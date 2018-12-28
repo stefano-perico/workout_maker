@@ -58,7 +58,7 @@ class WorkoutController extends AbstractController
         $form = $this->createForm(WorkoutFormType::class);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var Workout $workout */
             $workout = $form->getData();
             $workout->setUser($this->getUser());

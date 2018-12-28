@@ -29,7 +29,7 @@
                     <div class="col-12 user-pad text-center">
                         <h3>WORKOUTS</h3>
                         <h4>{{ app.user.workouts | length }}</h4>
-                        <a href="{{ path('app_workout_new') }}" class="btn btn-wm">Creat New</a>
+                        <a href="{{ path('app_workout_new') }}" class="btn btn-wm">Create a New</a>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <article class="my-5 row">
                   {% for workout in app.user.workouts %}
                         <div class="col-lg-4 col-sm-6 col-12 mb-4">
-                            <div class="example-1 card-wm">
+                            <div class="card-style card-wm">
                                 <div class="wrapper">
                                     <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
                                         <img src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"

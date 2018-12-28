@@ -1,0 +1,26 @@
+
+{{ form_start(contactForm) }}
+
+        {{ form_row(contactForm.name, {
+            label:false,
+            attr: { placeholder: 'Your name' }
+        }) }}
+
+        {{ form_row(contactForm.mail, {
+            label:false,
+            attr: { placeholder: 'Your email' }
+        }) }}
+
+        {{ form_row(contactForm.subject, {
+            label:false,
+            attr: { placeholder: 'Subject' }
+        }) }}
+
+        {{ form_row(contactForm.message, {
+            label:false,
+            attr: { placeholder: 'Your message' }
+        }) }}
+    <div class="text-center mt-4">
+        <button class="btn btn-wm">Send <i class="fa fa-paper-plane ml-1"></i></button>
+    </div>
+{{ form_end(contactForm) }}

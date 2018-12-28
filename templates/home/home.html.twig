@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
 {% endblock %}
 
 {% block title %}Home{% endblock %}
@@ -20,7 +21,7 @@
                         <hr class="my-5 hr-wm">
 
                         <h2 class="white-text my-4">Créer votre entrainement sur mesure</h2>
-                        <a href="{{ path('app_workouts') }}" class="btn btn-wm">Trouver un workout</a>
+                        <a href="{{ path('app_register') }}" class="btn btn-wm">Register</a>
                     </div>
                 </div>
             </div>
@@ -79,37 +80,37 @@
 
         <hr class="my-5 hr-wm">
 
-        <section>
-            <h2 class="text-center font-weight-bold white-text mb-4">last workout</h2>
+        <section class="row">
+            <h2 class="col-12 text-center font-weight-bold white-text mb-4">last workout</h2>
 
             <!-- Workout section -->
             {% for workout in workouts %}
-                <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}" class="white-text">
-                    <article class="media">
-                        <img class="d-flex align-self-center mr-3"
-                             src="
-                                {% if workout.imageName %}
-                                    {{ vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') }}
-                                {% else %}
-                                    {{ asset('images/workouts/default.jpg') | imagine_filter('thumb') }}
-                                {% endif %}"
-                             alt="Generic placeholder image">
-                        <aside class="media-body">
-                            <h5 class="font-weight-bold mb-0">
-                                {{ workout.name }}
-                                <span> <!-- TODO add popularity <i class="fa fa-star orange-text-wm"> </i>--></span>
-                            </h5>
-                            <p class="mb-0"><strong>By :</strong> {{ workout.user.email }} </p>
-                            <p><strong>{{ workout.publishedAT|ago }}</strong></p>
-                        </aside>
-                    </article>
-                </a>
-                <hr class="hr-wm">
+                <div class="col-lg-4 col-sm-6 col-12 mb-4">
+                    <div class="card-style card-wm">
+                        <div class="wrapper" >
+                            <a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">
+                                <img src="{{ workout.imageName ? vich_uploader_asset(workout, 'imageFile') | imagine_filter('thumb') : asset('images/workouts/default.jpg') | imagine_filter('thumb') }}"
+                                     alt="workout's image">
+                            </a>
+                            <div class="date">
+                                <span class="day">{{ workout.createdAt | ago }}</span>
+                            </div>
+                            <div class="data">
+                                <div class="content">
+                                    <img src="{{ workout.user.avatarUrl(30) }}" alt="user logo" class="img-responsive thumbnail">
+                                    <span class="author">{{ workout.user.email }}</span>
+                                    <h3 class="title"><a href="{{ path('app_workout_show', {'slug': workout.slug}) }}">{{ workout.name }}</a></h3>
+                                    <p class="text">{{ workout.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
 
         </section>
 
-
+        <hr class="my-5 hr-wm">
         <!--Section: Contact-->
         <section id="contact" class="mt-5">
 
@@ -119,27 +120,7 @@
             <!--Grid row-->
             <article>
                     <!-- Form contact -->
-                    <form class="p-5">
-                        <div class="md-form form-sm"> <i class="fa fa-user prefix orange-text-wm"></i>
-                            <input type="text" id="form1" class="form-control form-control-sm">
-                            <label for="form1">Your name</label>
-                        </div>
-                        <div class="md-form form-sm"> <i class="fa fa-envelope prefix orange-text-wm"></i>
-                            <input type="text" id="form2" class="form-control form-control-sm">
-                            <label for="form2">Your email</label>
-                        </div>
-                        <div class="md-form form-sm"> <i class="fa fa-tag prefix orange-text-wm"></i>
-                            <input type="text" id="form3" class="form-control form-control-sm">
-                            <label for="form3">Subject</label>
-                        </div>
-                        <div class="md-form form-sm"> <i class="fa fa-pen prefix orange-text-wm"></i>
-                            <textarea type="text" id="form8" class="md-textarea form-control form-control-sm" rows="4"></textarea>
-                            <label for="form8">Your message</label>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button class="btn btn-wm">Send <i class="fa fa-paper-plane ml-1"></i></button>
-                        </div>
-                    </form>
+                    {{ include('home/_contactForm.html.twig') }}
                     <!-- Form contact -->
             </article>
             <!--Grid row-->

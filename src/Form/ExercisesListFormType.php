@@ -17,7 +17,7 @@ class ExercisesListFormType extends AbstractType
     {
         $builder
             ->add('exercise', TextType::class)
-            ->add('description')
+            ->add('description', TextType::class)
             ->add('publishedAt', DateType::class)
             ->add('muscleGroup', EntityType::class, [
                 'class'         =>  MuscleGroup::class,
