@@ -48,6 +48,7 @@ class WorkoutController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/new", name="app_workout_new")
      */
     public function create(EntityManagerInterface $em, Request $request)
