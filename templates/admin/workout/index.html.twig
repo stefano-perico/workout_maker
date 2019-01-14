@@ -27,7 +27,6 @@
                 <tr>
                     <th scope="col">Workout</th>
                     <th scope="col">Author</th>
-                    <th scope="col">Published ?</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,9 +40,6 @@
                         <td>
                             {{ workout.user.email }}
                         </td>
-                        <td>
-                            <span class="fa fa-{{ workout.isPublished ? 'check' : 'times' }}"></span>
-                        </td>
                     </tr>
                 {% else %}
                     <tr>
@@ -54,7 +50,10 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {{ knp_pagination_render(workouts) }}
         </article>
     </section>
+    <br>
+    <aside>
+        {{ knp_pagination_render(workouts) }}
+    </aside>
 {% endblock %}

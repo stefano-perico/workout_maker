@@ -36,8 +36,10 @@
                     <aside class="media wm-exercise my-2">
 
                         <div class="media-body">
-                            <h5><a class="white-text" href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} </a></h5>
-                            <p>{{ exercise.reps }} reps</p>
+                            <h5><a class="white-text font-weight-bold"
+                                   href="{{ path('app_exercise_show', {'slug': exercise.exerciseName.slug }) }}">{{ exercise.exerciseName.exercise }} </a>
+                            </h5>
+                            <h4>{{ exercise.reps }} reps</h4>
                         </div>
                         <img class="d-flex ml-3"
                              src="{{ asset(exercise.exerciseName.muscleGroup.image) }}"

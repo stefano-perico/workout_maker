@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -55,13 +55,18 @@
                             {% if is_granted('ROLE_USER') %}
                             <li class="nav-item dropdown mr-3">
                                 <a class="nav-link dropdown-toggle" href="{{ path('app_account') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ app.user.avatarUrl(30) }}" class="img-responsive thumbnail">
+                                    <img src="{{ app.user.avatarUrl(30) }}" alt="user's avatar"
+                                         class="img-responsive thumbnail">
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
                                     <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
                                     {% if is_granted('ROLE_ADMIN') %}
-                                        <a class="dropdown-item" href="{{ path('admin_user_index') }}">Admin</a>
+                                        <a class="dropdown-item" href="{{ path('admin_exercise_index') }}">Admin
+                                            exercise</a>
+                                        <a class="dropdown-item" href="{{ path('admin_user_index') }}">Admin user</a>
+                                        <a class="dropdown-item" href="{{ path('admin_workout_index') }}">Admin
+                                            workout</a>
                                     {% endif %}
                                 </div>
                             </li>
