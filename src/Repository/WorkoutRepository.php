@@ -48,7 +48,7 @@ class WorkoutRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('w')
             ->setMaxResults(3)
-            ->orderBy('w.publishedAt', 'DESC')
+            ->orderBy('w.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
