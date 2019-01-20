@@ -47,7 +47,6 @@ class WorkoutRepository extends ServiceEntityRepository
     public function findThreeLastPublishedWorkouts()
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.publishedAt IS NOT NULL')
             ->setMaxResults(3)
             ->orderBy('w.publishedAt', 'DESC')
             ->getQuery()
